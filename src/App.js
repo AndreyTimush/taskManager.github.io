@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import ToDo from "./ToDo";
+import ToDoForm from "./ToDoForm";
+import RemoveAll from "./RemoveAll";
 
 function App() {
+  const [todos, setTodos] = useState([]);
+  const addTask = (userInput) => {
+    if (userInput) {
+      const newItem = {
+        id: Math.random().toString(36).substring(2, 9),
+        task: userInput,
+        complete: false,
+      };
+      setTodos([...todos, newItem]);
+    }
+  };
+
+  const removeAllTasks = (e) => {
+    e.preventDefault();
+    let list = [];
+    console.log(123);
+    setTodos([]);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+        <h1>Task manager</h1>
       </header>
+      <ToDoForm addTask={addTask} />
+      <RemoveAll removeAllTasks={removeAllTasks} />
+      {todos.map((todo) => {
+        return <ToDo todo={todo} key={todo.id} />;
+      })}
     </div>
   );
 }
