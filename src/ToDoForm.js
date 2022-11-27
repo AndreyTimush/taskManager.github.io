@@ -19,19 +19,16 @@ function ToDoForm({ addTask }) {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          value={userInput}
-          type="text"
-          onChange={handleChange}
-          onKeyDown={handleKeyPress}
-          placeholder="Max length 240"
-          maxLength="240"
-        />
-        <button>Add task</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        value={userInput}
+        type="text"
+        onChange={handleChange}
+        placeholder="Max length 240"
+        maxLength="240"
+      />
+      <button>Add task</button>
+    </form>
   );
 }
 
