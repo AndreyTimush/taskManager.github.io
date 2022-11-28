@@ -2,6 +2,7 @@ import { useState } from "react";
 import ToDo from "./ToDo";
 import ToDoForm from "./ToDoForm";
 import RemoveAll from "./RemoveAll";
+import Upload from "./Upload";
 
 const tasks = [
   {
@@ -37,6 +38,17 @@ function App() {
       };
       setTodos([...todos, newItem]);
     }
+  };
+
+  const addTaskFromFile = (arr) => {
+    const newArr = arr.map((element) => {
+      return {
+        id: element.id,
+        task: element.task,
+        date: element.date,
+      };
+    });
+    setTodos([...todos, ...newArr]);
   };
 
   const checkDate = (todo) => {
@@ -86,6 +98,7 @@ function App() {
       </div>
 
       <RemoveAll removeAllTasks={removeAllTasks} />
+      <Upload addTaskFromFile={addTaskFromFile} />
 
       <div className="tasks-list-section mt-2">
         <div className="container">
@@ -98,6 +111,18 @@ function App() {
       </div>
     </div>
   );
+}
+
+function Home() {
+  return (
+    <div>
+      <button></button>
+    </div>
+  )
+}
+
+function Tasks() {
+
 }
 
 export default App;

@@ -12,12 +12,6 @@ function ToDoForm({ addTask }) {
     setUserInput("");
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleSubmit(e);
-    }
-  };
-
   return (
     <form onSubmit={handleSubmit}>
       <input
@@ -27,7 +21,9 @@ function ToDoForm({ addTask }) {
         placeholder="Max length 240"
         maxLength="240"
       />
-      <button>Add task</button>
+      <button type="submit" className="btn btn-primary mt-4">
+        Add task
+      </button>
     </form>
   );
 }
