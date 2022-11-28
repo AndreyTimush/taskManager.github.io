@@ -8,9 +8,9 @@ export default function Upload({ addTaskFromFile }) {
     };
   };
   return (
-    <>
+    <div className="container text-center">
       <input type="file" onChange={handleChange} />
       <br />
-    </>
+    </div>
   );
 }

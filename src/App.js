@@ -80,7 +80,9 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1>Task manager</h1>
+        <div className="container text-center">
+          <h1>Task manager</h1>
+        </div>
       </header>
       <div className="form-section mt-2">
         <div className="container">
@@ -111,18 +113,6 @@ function App() {
       </div>
     </div>
   );
-}
-
-function Home() {
-  return (
-    <div>
-      <button></button>
-    </div>
-  )
-}
-
-function Tasks() {
-
 }
 
 export default App;
