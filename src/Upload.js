@@ -7,9 +7,15 @@ export default function Upload({ addTaskFromFile }) {
       addTaskFromFile(arrayOfObjects);
     };
   };
+
   return (
     <div className="container text-center">
-      <input type="file" onChange={handleChange} />
+      <input
+        className="hidden"
+        type="file"
+        onChange={handleChange}
+        accept=".json"
+      />
       <br />
     </div>
   );
