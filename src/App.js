@@ -53,7 +53,7 @@ function App() {
   const addTaskFromFile = (arr) => {
     const newArr = arr.map((element) => {
       return {
-        id: element.id,
+        id: Math.random(),
         task: element.task,
         date: element.date,
       };
