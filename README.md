@@ -6,9 +6,13 @@
 
 ### Для начала разработки
 
-`git clone https://github.com/AndreyTimush/AndreyTimush.github.io.git cd AndreyTimush.github.io npm i npm start`
+```git clone https://github.com/AndreyTimush/AndreyTimush.github.io.git
+cd AndreyTimush.github.io
+npm i
+npm start```
 
 ### Build
 
-`npm build`
+```npm build```
 Статика будет доступна в директории build
+````
