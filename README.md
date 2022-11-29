@@ -6,7 +6,8 @@
 
 ### Для начала разработки
 
-```git clone https://github.com/AndreyTimush/AndreyTimush.github.io.git
+```
+git clone https://github.com/AndreyTimush/AndreyTimush.github.io.git
 cd AndreyTimush.github.io
 npm i
 npm start```
