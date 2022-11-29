@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import React from "react";
 import ToDo from "./ToDo";
 import ToDoForm from "./ToDoForm";
 import RemoveAll from "./RemoveAll";
@@ -27,8 +28,17 @@ const tasks = [
   },
 ];
 
+const PAGE_HOME = "/";
+const PAGE_TASKS = "/tasks";
+
+export const RouterContext = React.createContext({
+  page: PAGE_HOME,
+  setPage: (page) => page,
+});
+
 function App() {
   const [todos, setTodos] = useState(tasks);
+
   const addTask = (userInput) => {
     if (userInput) {
       const newItem = {
@@ -77,41 +87,120 @@ function App() {
     setTodos([]);
   };
 
-  return (
-    <div className="App">
-      <header>
-        <div className="container text-center">
-          <h1>Task manager</h1>
-        </div>
-      </header>
-      <div className="form-section mt-2">
-        <div className="container">
-          <div className="row">
-            <div className="col col-3 mx-auto">
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">Add new task</h5>
-                  <ToDoForm addTask={addTask} />
+  const routes = new Set([PAGE_HOME, PAGE_TASKS]);
+
+  const getCurrentRoute = (location) => {
+    if (routes.has(location)) {
+      return location;
+    }
+
+    return PAGE_HOME;
+  };
+
+  const RouterProvider = ({ children }) => {
+    const [page, setPage] = useState(getCurrentRoute(window.location.pathname));
+
+    const performSetPage = (page) => {
+      setPage(page);
+
+      return page;
+    };
+
+    return (
+      <RouterContext.Provider value={{ page, setPage: performSetPage }}>
+        {children}
+      </RouterContext.Provider>
+    );
+  };
+
+  const useRouter = () => {
+    const { page, setPage } = useContext(RouterContext);
+
+    useEffect(() => {
+      window.onpopstate = () => {
+        setPage(document.location.pathname);
+      };
+    }, []);
+
+    const pushPage = (page) => {
+      window.history.pushState({}, "", page);
+      setPage(page);
+    };
+
+    return { page, pushPage };
+  };
+
+  const HomePage = () => {
+    const { pushPage } = useRouter();
+
+    return (
+      <div className="container text-center">
+        <h1>Task manager</h1>
+        <button
+          type="submit"
+          className="btn btn-primary mt-4"
+          onClick={() => pushPage(PAGE_TASKS)}
+        >
+          Task manager
+        </button>
+      </div>
+    );
+  };
+
+  const PageResolver = () => {
+    const { page } = useRouter();
+
+    return (
+      <div>
+        {page === PAGE_HOME && <HomePage />}
+        {page === PAGE_TASKS && <TasksPage />}
+      </div>
+    );
+  };
+
+  const TasksPage = () => {
+    return (
+      <div className="App">
+        <header>
+          <div className="container text-center">
+            <h1>Task manager</h1>
+          </div>
+        </header>
+        <div className="form-section mt-2">
+          <div className="container">
+            <div className="row">
+              <div className="col col-3 mx-auto">
+                <div className="card">
+                  <div className="card-body">
+                    <h5 className="card-title">Add new task</h5>
+                    <ToDoForm addTask={addTask} />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <RemoveAll removeAllTasks={removeAllTasks} />
-      <Upload addTaskFromFile={addTaskFromFile} />
+        <RemoveAll removeAllTasks={removeAllTasks} />
+        <Upload addTaskFromFile={addTaskFromFile} />
 
-      <div className="tasks-list-section mt-2">
-        <div className="container">
-          <ul className="list-group">
-            {todos.map((todo) => {
-              return <ToDo todo={todo} key={todo.id} checkDate={checkDate} />;
-            })}
-          </ul>
+        <div className="tasks-list-section mt-2">
+          <div className="container">
+            <ul className="list-group">
+              {todos.map((todo) => {
+                return <ToDo todo={todo} key={todo.id} checkDate={checkDate} />;
+              })}
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
+    );
+  };
+
+  return (
+    <RouterProvider>
+      <PageResolver />
+    </RouterProvider>
   );
 }
 
