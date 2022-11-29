@@ -4,7 +4,7 @@ https://github.com/TrustedRu/ct-react-hooks-homework
 
 Развернуто на https://andreytimush.github.io/
 
-Тестовые данные для проверки загрузки файла лежат в репозитории в директории 
+Тестовые данные для проверки загрузки файла лежат в репозитории в директории https://github.com/AndreyTimush/AndreyTimush.github.io/tree/master/test_files
 
 ### Для начала разработки
 
