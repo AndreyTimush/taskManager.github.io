@@ -1,4 +1,16 @@
-function ToDo({ todo, returnColor }) {
+function ToDo({ todo }) {
+  const returnColor = (todo) => {
+    const date = todo.date;
+    const str = date.split(".");
+    const month = Number(str[1] - 1);
+    const dateTask = new Date(str[2], month, str[0]);
+    const nowDate = new Date();
+    if (dateTask < nowDate) {
+      return "pink";
+    }
+    return "";
+  };
+
   return (
     <div>
       <div>

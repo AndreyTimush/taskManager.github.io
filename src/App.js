@@ -2,7 +2,6 @@ import { useState, useContext, useEffect } from "react";
 import React from "react";
 import ToDo from "./ToDo";
 import ToDoForm from "./ToDoForm";
-import RemoveAll from "./RemoveAll";
 import Upload from "./Upload";
 
 function generateId() {
@@ -66,18 +65,6 @@ function App() {
     setTask([...tasks, ...newArr]);
   };
 
-  const returnColor = (todo) => {
-    const date = todo.date;
-    const str = date.split(".");
-    const month = Number(str[1] - 1);
-    const dateTask = new Date(str[2], month, str[0]);
-    const nowDate = new Date();
-    if (dateTask < nowDate) {
-      return "pink";
-    }
-    return "";
-  };
-
   function generateDate() {
     const currentDate = new Date();
     currentDate.setDate(currentDate.getDate() + 7);
@@ -125,6 +112,7 @@ function App() {
       window.onpopstate = () => {
         setPage(document.location.pathname);
       };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const pushPage = (page) => {
@@ -174,28 +162,22 @@ function App() {
         <div className="form-section mt-2">
           <div className="container">
             <div className="row">
-              <div className="col col-3 mx-auto">
-                <div className="card">
-                  <div className="card-body">
-                    <h5 className="card-title">Add new task</h5>
-                    <ToDoForm addTask={addTask} />
-                  </div>
+              <div className="card">
+                <div className="card-body">
+                  <ToDoForm addTask={addTask} removeAllTasks={removeAllTasks} />
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <RemoveAll removeAllTasks={removeAllTasks} />
         <Upload addTaskFromFile={addTaskFromFile} />
 
         <div className="tasks-list-section mt-2">
           <div className="container">
             <ul className="list-group">
               {tasks.map((todo) => {
-                return (
-                  <ToDo todo={todo} key={todo.id} returnColor={returnColor} />
-                );
+                return <ToDo todo={todo} key={todo.id} />;
               })}
             </ul>
           </div>
