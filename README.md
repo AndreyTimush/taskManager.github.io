@@ -15,8 +15,11 @@ npm i
 npm start
 ```
 
-### Build
+### Deploy
 
-```npm build```
+```
+npm build
+npm run deploy
+```
 
 Статика будет доступна в директории build
